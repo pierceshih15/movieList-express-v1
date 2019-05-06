@@ -22,19 +22,19 @@ app.get('/', (req, res) => {
 // Search Router
 app.get('/search', (req, res) => {
   const searchKeyword = req.query.keyword;
-  const movies = movieList.filter(item => {
-    return item.title.toLowerCase().includes(searchKeyword.toLowerCase());
+  const filterMovies = movieList.filter(movie => {
+    return movie.title.toLowerCase().includes(searchKeyword.toLowerCase());
   })
   res.render('index', {
-    movies: movies,
+    movies: filterMovies,
     searchKeyword: searchKeyword,
   });
 })
 
 // Movies-Info Router
 app.get('/movies/:id', (req, res) => {
-  const movie = movieList.filter(item => {
-    return item.id == req.params.id
+  const movie = movieList.filter(movie => {
+    return movie.id == req.params.id
   })
   res.render('show', {
     movie: movie[0],

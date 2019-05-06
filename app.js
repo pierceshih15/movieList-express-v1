@@ -12,10 +12,32 @@ app.engine('handlebars', exphbs({
 // 透過 set 語法設定顯示樣板 view engine 為 handlebars
 app.set('view engine', 'handlebars');
 
-
+// HomePage Router
 app.get('/', (req, res) => {
   res.render('index', {
-    movieList: movieList,
+    movies: movieList,
+  });
+})
+
+// Search Router
+app.get('/search', (req, res) => {
+  const searchKeyword = req.query.keyword;
+  const movies = movieList.filter(item => {
+    return item.title.toLowerCase().includes(searchKeyword.toLowerCase());
+  })
+  res.render('index', {
+    movies: movies,
+    searchKeyword: searchKeyword,
+  });
+})
+
+// Movies-Info Router
+app.get('/movies/:id', (req, res) => {
+  const movie = movieList.filter(item => {
+    return item.id == req.params.id
+  })
+  res.render('show', {
+    movie: movie[0],
   });
 })
 
